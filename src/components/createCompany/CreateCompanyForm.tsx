@@ -77,7 +77,7 @@ export default function CreateCompanyForm() {
   if (!jwtToken) return null;
 
   return (
-    <div className="components-createCompany-CreateCompanyForm text-black all-[unset] justify-center bg-white">
+    <div className="components-createCompany-CreateCompanyForm text-black all-[unset] justify-center bg-white  h-full">
       <div className="flex justify-between items-start relative">
         <div className="w-full h-[2px] absolute bottom-0 left-0 bg-gray-200"></div>
         <div className="flex">
@@ -99,7 +99,7 @@ export default function CreateCompanyForm() {
         </div>
 
         <button
-          className="mt-5 mr-5"
+          className="mt-4 mr-5"
           onClick={() => dispatch(setShowCreateCompanyForm(false))}
         >
           <X size={25} />
@@ -111,10 +111,11 @@ export default function CreateCompanyForm() {
       <FormProvider {...methods}>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="overflow-hidden components-createCompany-CreateCompanyForm text-black hide-scrollbar w-full flex flex-col space-y-2 pb-4"
+          className=" components-createCompany-CreateCompanyForm text-black hide-scrollbar w-full flex flex-col space-y-2 h-full overflow-auto"
         >
-          <div className=" mb-0 px-5 grid grid-cols-1 lg:grid-cols-[32%_63%]  gap-6">
-            <div className="col-span-1 bg-[#f6f7f9] px-7  py-4 rounded-lg mt-2">
+          <div className=" mb-0 px-5 grid grid-cols-1 lg:grid-cols-[32%_63%]  gap-6 relatives scroll-auto">
+            <div className="w-full h-[2px] absolute bottom-0 left-0 bg-gray-200"></div>
+            <div className="col-span-1 bg-[#f6f7f9] px-7  py-4 rounded-lg mt-2 overflow-scroll mb-2">
               <h5 className="font-medium text-xl">Company Logo</h5>
               <p className="text-gray-400 font-medium mb-4">
                 Upload a logo to build your brand identity
@@ -133,10 +134,10 @@ export default function CreateCompanyForm() {
               />
             </div>
 
-            <div className="relative">
+            <div className="relative overflow-auto">
               <div className="w-[2px] h-full absolute left-0 top-0 bg-gray-200"></div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-7 gap-x-4 mb-4 ml-8 mt-6 ">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-5 gap-x-4 mb-3 ml-8 mt-3">
                 <div>
                   <h5 className="text-lg font-medium mb-2">Company Name</h5>
                   <InputField
@@ -217,8 +218,8 @@ export default function CreateCompanyForm() {
               </div>
             </div>
           </div>
-          <div className="flex justify-end gap-3 py-2 px-4 relative">
-            <div className="w-full h-[2px] absolute top-0 left-0 bg-gray-200"></div>
+          <div className="flex items-center my-auto justify-end gap-3 py-4 px-4 absolute bottom-0 right-0 w-full bg-white">
+            {/* <div className="absolute bottom-0 left-0 w-full"> */}
             <button
               type="button"
               onClick={() => dispatch(setShowCreateCompanyForm(false))}
@@ -235,6 +236,7 @@ export default function CreateCompanyForm() {
               <ChevronRight className="h-5 w-5 mt-1 transition-transform duration-300 group-hover:translate-x-0.5" />
             </button>
           </div>
+          {/* </div> */}
         </form>
       </FormProvider>
     </div>

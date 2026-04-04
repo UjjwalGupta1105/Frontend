@@ -100,9 +100,9 @@ export default function DragAndDropFileBlob({
         <p className="text-sm text-red-500 mt-1 ml-1">{error.message}</p>
       )}
 
-      <div className="mt-4">
+      <div className="mt-3">
         {/* Preview header */}
-        <div className="flex items-center gap-2 mb-4">
+        <div className="flex items-center gap-2 mb-2">
           <div className="flex-1 h-px bg-gray-400" />
           <p className="text-lg text-gray-500">Preview</p>
           <div className="flex-1 h-px bg-gray-400" />

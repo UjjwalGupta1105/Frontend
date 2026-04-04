@@ -388,7 +388,7 @@ export default function DashboardLayout({
 }
 
 const Wrapper = ({ children }: { children: React.ReactNode }) => (
-  <div className="shadow-gray-500 dashboard-layout hidden sm:block sm:absolute top-[4%] right-[5%] rounded-lg shadow-lg  hide-scrollbar justify-center z-20 px-2 h-[calc(100vh-7%)] w-full sm:w-[87%] bg-[#F5F5F5] overflow-y-auto">
+  <div className="shadow-gray-500 dashboard-layout hidden sm:block sm:absolute top-[2%] right-[5%] rounded-lg shadow-lg  hide-scrollbar justify-center z-20 px-2 h-[calc(100vh-5%)] w-full sm:w-[87%] bg-[#F5F5F5] overflow-scroll">
     <div className="dashboard-layout w-full min-h-full">{children}</div>
   </div>
 );
