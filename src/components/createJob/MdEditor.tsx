@@ -14,7 +14,7 @@ interface MdEdiotorProps {
 
 const MarkdownEditor: FC<MdEdiotorProps> = ({ value, onFileChange, error }) => {
   return (
-    <div>
+    <div className="h-[50px]">
       <MDEditor
         value={value ?? undefined}
         onChange={onFileChange}

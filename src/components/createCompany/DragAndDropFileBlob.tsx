@@ -83,8 +83,8 @@ export default function DragAndDropFileBlob({
             <Image
               src="/drag-drop-upload-logo.svg"
               alt="Upload Icon"
-              width={54}
-              height={54}
+              width={47}
+              height={47}
             />
           </div>
 
@@ -100,7 +100,7 @@ export default function DragAndDropFileBlob({
         <p className="text-sm text-red-500 mt-1 ml-1">{error.message}</p>
       )}
 
-      <div className="mt-6">
+      <div className="mt-4">
         {/* Preview header */}
         <div className="flex items-center gap-2 mb-4">
           <div className="flex-1 h-px bg-gray-400" />
@@ -109,7 +109,7 @@ export default function DragAndDropFileBlob({
         </div>
 
         <div className="flex items-center gap-4">
-          <div className="h-20 w-20 rounded-xl bg-[#dde9fc] flex items-center justify-center overflow-hidden">
+          <div className="h-18 w-18 rounded-xl bg-[#dde9fc] flex items-center justify-center overflow-hidden">
             {previewUrl ? (
               <Image
                 src={previewUrl}

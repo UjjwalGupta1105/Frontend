@@ -111,10 +111,10 @@ export default function CreateCompanyForm() {
       <FormProvider {...methods}>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="components-createCompany-CreateCompanyForm text-black hide-scrollbar w-full flex flex-col space-y-2 pb-4"
+          className="overflow-hidden components-createCompany-CreateCompanyForm text-black hide-scrollbar w-full flex flex-col space-y-2 pb-4"
         >
           <div className=" mb-0 px-5 grid grid-cols-1 lg:grid-cols-[32%_63%]  gap-6">
-            <div className="col-span-1 bg-[#f6f7f9] px-7  py-4 rounded-lg mt-4 mb-6">
+            <div className="col-span-1 bg-[#f6f7f9] px-7  py-4 rounded-lg mt-2">
               <h5 className="font-medium text-xl">Company Logo</h5>
               <p className="text-gray-400 font-medium mb-4">
                 Upload a logo to build your brand identity
@@ -136,7 +136,7 @@ export default function CreateCompanyForm() {
             <div className="relative">
               <div className="w-[2px] h-full absolute left-0 top-0 bg-gray-200"></div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-7 gap-x-4 mb-7 ml-8 mt-6 ">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-7 gap-x-4 mb-4 ml-8 mt-6 ">
                 <div>
                   <h5 className="text-lg font-medium mb-2">Company Name</h5>
                   <InputField
@@ -197,7 +197,7 @@ export default function CreateCompanyForm() {
                 </div>
               </div>
 
-              <div className="ml-8 mb-6">
+              <div className="ml-8">
                 <h5 className="text-lg font-medium">Description</h5>
                 <p className="text-gray-400 text-md  mb-3">
                   Tell us about your company, culture, and what makes it unique
@@ -217,7 +217,7 @@ export default function CreateCompanyForm() {
               </div>
             </div>
           </div>
-          <div className="flex justify-end gap-3  p-4 relative">
+          <div className="flex justify-end gap-3 py-2 px-4 relative">
             <div className="w-full h-[2px] absolute top-0 left-0 bg-gray-200"></div>
             <button
               type="button"

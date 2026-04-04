@@ -6,38 +6,39 @@ import rehypeRaw from "rehype-raw";
 import remarkMath from "remark-math";
 
 interface MarkdownEditorProps {
-    value: string | undefined
-    onValueChange: (value: string | undefined) => void
-    error?: FieldError
-    placeholder: string
+  value: string | undefined;
+  onValueChange: (value: string | undefined) => void;
+  error?: FieldError;
+  placeholder: string;
 }
 
-const MarkdownEditor: FC<MarkdownEditorProps> = ({ value, onValueChange, error, placeholder }) => {
-    return (
-        <div>
-            <MDEditor
-                value={value}
-                onChange={onValueChange}
-                data-color-mode="light"
-                height={600}
-                overflow
-                preview="edit"
-                textareaProps={{
-                    placeholder,
-                }}
-                previewOptions={{
-                    rehypePlugins: [rehypeRaw, rehypeKatex],
-                    remarkPlugins: [remarkMath],
-                }}
-            />
+const MarkdownEditor: FC<MarkdownEditorProps> = ({
+  value,
+  onValueChange,
+  error,
+  placeholder,
+}) => {
+  return (
+    <div>
+      <MDEditor
+        value={value}
+        onChange={onValueChange}
+        data-color-mode="light"
+        height={260}
+        overflow
+        preview="edit"
+        textareaProps={{
+          placeholder,
+        }}
+        previewOptions={{
+          rehypePlugins: [rehypeRaw, rehypeKatex],
+          remarkPlugins: [remarkMath],
+        }}
+      />
 
-            {error && (
-                <p className="mt-1 text-sm text-red-500">
-                    {error.message}
-                </p>
-            )}
-        </div>
-    );
+      {error && <p className="mt-1 text-sm text-red-500">{error.message}</p>}
+    </div>
+  );
 };
 
 export default MarkdownEditor;
