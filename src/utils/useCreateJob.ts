@@ -33,8 +33,8 @@ const useCreateJob = () => {
 
       toast.error(message);
     },
-    onSuccess: () => {
-      toast.success("Job posted successfully!");
+    onSuccess: (data) => {
+      toast.success(data.message || "Job posted successfully!");
       queryClient.invalidateQueries({ queryKey: ["jobList"] });
     },
   });

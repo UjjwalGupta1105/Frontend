@@ -1,5 +1,7 @@
 import { userServiceApi } from "@/lib/axios.config";
+import { ErrorResponse } from "@/types/ErrorResponse";
 import { useMutation } from "@tanstack/react-query"
+import { AxiosError } from "axios";
 import { toast } from "sonner";
 
 const useCreateLocation = () => {
@@ -17,11 +19,16 @@ const useCreateLocation = () => {
                 throw error ;
             }
         },
-        onSuccess: ()=>{
-            toast.success("Location Added successfully")
+        onSuccess: (response)=>{
+            toast.success(response.data.message || "Location Added successfully");
         },
-        onError: ()=>{
-            toast.error("Error creating location")
+        onError: (error: AxiosError<ErrorResponse>)=>{
+            const message =
+                error.response?.data?.message ||
+                error.message ||
+                "Something went wrong";
+
+            toast.error(message);
         }
     })
 }

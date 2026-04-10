@@ -1,7 +1,8 @@
 import { jobServiceApi } from "@/lib/axios.config";
 import { CreateCompanySchema } from "@/schema/createCompany.validator";
+import { ErrorResponse } from "@/types/ErrorResponse";
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
 import z from "zod";
 
@@ -50,19 +51,17 @@ function useCreateCompany() {
         throw error;
       }
     },
-    onError: (error) => {
-      if (axios.isAxiosError(error)) {
-        toast.error(
-          error.response?.data?.message ||
-            "Error occured while creating company",
-        );
-      } else {
-        toast.error("Error occured while creating company ");
-      }
-    },
+    onError: (error: AxiosError<ErrorResponse>) => {
+      const message =
+           error.response?.data?.message ||
+           error.message ||
+           "Something went wrong";
+    
+      toast.error(message);
+        },
 
-    onSuccess: () => {
-      toast.success("Company created successfully");
+    onSuccess: (data) => {
+      toast.success(data.message || "Company created successfully");
     },
   });
 }

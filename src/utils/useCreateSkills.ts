@@ -1,5 +1,7 @@
 import { userServiceApi } from "@/lib/axios.config";
+import { ErrorResponse } from "@/types/ErrorResponse";
 import { useMutation } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import { toast } from "sonner";
 
 const useCreateSkill = () => {
@@ -26,11 +28,16 @@ const useCreateSkill = () => {
         throw error;
       }
     },
-    onSuccess: ()=>{
-        toast.success('Skills Added successfully')
+    onSuccess: (response)=>{
+        toast.success(response.data.message || "Skills Added successfully");
     },
-    onError: ()=>{
-        toast.error('Error creating skills')
+    onError: (error: AxiosError<ErrorResponse>)=>{
+        const message =
+              error.response?.data?.message ||
+              error.message ||
+              "Something went wrong";
+
+        toast.error(message);
     }
   });
 };

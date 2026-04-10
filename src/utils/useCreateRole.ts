@@ -2,6 +2,7 @@ import { userServiceApi } from "@/lib/axios.config";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
+import { ErrorResponse } from "@/types/ErrorResponse";
 
 const useCreateRole = () => {
   return useMutation({
@@ -29,23 +30,17 @@ const useCreateRole = () => {
       return response.data;
     },
 
-    onError: (error: unknown) => {
-      if (error instanceof AxiosError) {
-        const message =
-          error.response?.data?.message ||
-          error.response?.data?.error ||
-          "Server error occurred";
-        toast.error(`Error creating role: ${message}`);
-      } else if (error instanceof Error) {
-        toast.error(`${error.message}`);
-      } else {
-        toast.error("Error while creating job");
-      }
+    onError: (error: AxiosError<ErrorResponse>) => {
+      const message =
+              error.response?.data?.message ||
+              error.message ||
+              "Something went wrong";
+
+      toast.error(message);
     },
 
-    onSuccess: () => {
-        
-      toast.success("Role created successfully!");
+    onSuccess: (data) => {
+      toast.success(data.message || "Role created successfully!");
     },
   });
 };

@@ -1,5 +1,7 @@
 import { jobServiceApi } from "@/lib/axios.config"
+import { ErrorResponse } from "@/types/ErrorResponse"
 import { useMutation } from "@tanstack/react-query"
+import { AxiosError } from "axios"
 import { toast } from "sonner"
 
 const  useCreateApplication= ()=>{
@@ -24,11 +26,16 @@ const  useCreateApplication= ()=>{
                 throw error ;
             }
         },
-        onError: ()=>{
-            toast.error("Error applying for job ")
+        onError: (error: AxiosError<ErrorResponse>)=>{
+            const message =
+                error.response?.data?.message ||
+                error.message ||
+                "Something went wrong";
+
+            toast.error(message);
         },
-        onSuccess: ()=>{
-            toast.success("Succesfully applied")
+        onSuccess: (data)=>{
+            toast.success(data.message || "Succesfully applied");
         }
     })
 }

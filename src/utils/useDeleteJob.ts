@@ -1,5 +1,7 @@
 import { jobServiceApi } from "@/lib/axios.config";
+import { ErrorResponse } from "@/types/ErrorResponse";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import { toast } from "sonner";
 
 type DeleteJobFormValues = {
@@ -31,14 +33,19 @@ const useDeleteJob = () => {
       }
     },
     onSuccess: (data, variables) => {
-      toast.success("Job deleted successfully!");
+      toast.success(data.message || "Job deleted successfully!");
       queryClient.invalidateQueries({
         queryKey: ["jobDetails", variables.deleteJobdata.id],
       });
       queryClient.invalidateQueries({ queryKey: ["jobList"] });
     },
-    onError: () => {
-      toast.error("Failed to delete job");
+    onError: (error: AxiosError<ErrorResponse>) => {
+      const message =
+            error.response?.data?.message ||
+            error.message ||
+            "Something went wrong";
+
+      toast.error(message);
     },
   });
 };
