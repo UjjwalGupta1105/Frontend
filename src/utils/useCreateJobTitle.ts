@@ -23,8 +23,8 @@ const useCreateJobTitle = () => {
 
       toast.error(message);
     },
-    onSuccess: (response) => {
-       toast.success(response.data.message || "Title created successfully");
+    onSuccess: (data) => {
+       toast.success(data.message || "Title created successfully");
     },
   });
 };
@@ -41,7 +41,7 @@ const createJob = async (authJwtToken: string | null, title: string) => {
       }
     );
 
-    return response;
+    return response.data;
   } catch (error) {
     throw error;
   }

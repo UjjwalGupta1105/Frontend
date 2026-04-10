@@ -14,7 +14,7 @@ const useCreateSkill = () => {
       skills: string[];
     }) => {
       try {
-        const response = userServiceApi.post(
+        const response = await userServiceApi.post(
           "/skills",
           { skills },
           {
@@ -23,13 +23,13 @@ const useCreateSkill = () => {
             },
           }
         );
-        return response;
+        return response.data;
       } catch (error) {
         throw error;
       }
     },
-    onSuccess: (response)=>{
-        toast.success(response.data.message || "Skills Added successfully");
+    onSuccess: (data)=>{
+        toast.success(data.message || "Skills Added successfully");
     },
     onError: (error: AxiosError<ErrorResponse>)=>{
         const message =

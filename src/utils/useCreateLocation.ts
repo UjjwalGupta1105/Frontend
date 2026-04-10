@@ -8,19 +8,19 @@ const useCreateLocation = () => {
     return useMutation({
         mutationFn: async({jwtToken, city, state, country}: {jwtToken: string, city: string, state: string, country: string})=> {
             try {
-                const response = userServiceApi.post('/locations', {city, state, country}, {
+                const response = await userServiceApi.post('/locations', {city, state, country}, {
                     headers: {
                         Authorization: jwtToken
                     }
                 });
 
-                return response ;
+                return response.data ;
             } catch (error) {
                 throw error ;
             }
         },
-        onSuccess: (response)=>{
-            toast.success(response.data.message || "Location Added successfully");
+        onSuccess: (data)=>{
+            toast.success(data.message || "Location Added successfully");
         },
         onError: (error: AxiosError<ErrorResponse>)=>{
             const message =
