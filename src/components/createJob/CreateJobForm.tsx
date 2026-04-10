@@ -133,9 +133,9 @@ export default function CreateJobForm({ className }: { className?: string }) {
 
   useEffect(() => {
     if (isSuccess) {
-      reset();
+      handleClose();
     }
-  }, [isSuccess, reset]);
+  }, [isSuccess]);
 
   const onSubmit = (createData: CreateJobFormValues) => {
     mutate({
@@ -397,7 +397,7 @@ export default function CreateJobForm({ className }: { className?: string }) {
                             onValueChange={field.onChange}
                             value={field.value}
                             error={fieldState.error}
-                            height={300}
+                            usingFor="email-editor-job"
                             placeholder="Type or paste your job description..."
                           />
                         )}

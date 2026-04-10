@@ -78,6 +78,7 @@ export default function CreateCompanyForm() {
 
   useEffect(() => {
     if (isSuccess) {
+      dispatch(setShowCreateCompanyForm(false))
       reset();
     }
   }, [isSuccess, reset]);
@@ -281,7 +282,7 @@ export default function CreateCompanyForm() {
                           onValueChange={field.onChange}
                           error={fieldState.error}
                           placeholder="Type or paste your company description..."
-                          height={250}
+                          usingFor="email-editor-company"
                         />
                       )}
                     />
