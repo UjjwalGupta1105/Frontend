@@ -3,7 +3,7 @@ import { userServiceApi } from "@/lib/axios.config";
 import { LogInFormSchema } from "@/schema/logIn.validator";
 import { ErrorResponse } from "@/types/ErrorResponse";
 import { useMutation } from "@tanstack/react-query";
-import axios, { AxiosError } from "axios";
+import  { AxiosError } from "axios";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
 import z from "zod";
@@ -31,6 +31,9 @@ const useLogin = () =>{
       toast.error(message);
     },
     onSuccess: (data) => {
+       const jwtToken = data.data;
+       localStorage.setItem("AuthJwtToken", String(jwtToken));
+       dispatch(setAuthJwtToken(jwtToken));
        toast.success(data.message || "Logged in successfully");
     },
   });
