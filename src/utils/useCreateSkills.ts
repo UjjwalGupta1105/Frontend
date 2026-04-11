@@ -1,4 +1,5 @@
 import { userServiceApi } from "@/lib/axios.config";
+import { ApiResponse } from "@/types/ApiResponse";
 import { ErrorResponse } from "@/types/ErrorResponse";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
@@ -13,20 +14,7 @@ const useCreateSkill = () => {
       jwtToken: string;
       skills: string[];
     }) => {
-      try {
-        const response = await userServiceApi.post(
-          "/skills",
-          { skills },
-          {
-            headers: {
-              Authorization: `${jwtToken}`,
-            },
-          }
-        );
-        return response.data;
-      } catch (error) {
-        throw error;
-      }
+      return await createSkill( jwtToken, skills);
     },
     onSuccess: (data)=>{
         toast.success(data.message || "Skills Added successfully");
@@ -41,5 +29,31 @@ const useCreateSkill = () => {
     }
   });
 };
+
+interface skill{
+   id: number;
+  name: string;
+  createdAt: string;  
+  deletedAt: string | null;
+}
+
+const createSkill=async(jwtToken: string, skills: string[]):Promise<ApiResponse<skill>>=>{
+  try {
+        const response = await userServiceApi.post(
+          "/skills",
+          { skills },
+          {
+            headers: {
+              Authorization: `${jwtToken}`,
+            },
+          }
+        );
+        console.log(response.data);
+        console.log("returning data")
+        return response.data;
+      } catch (error) {
+        throw error;
+      }
+}
 
 export default useCreateSkill;
