@@ -3,6 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
 import { ErrorResponse } from "@/types/ErrorResponse";
+import { ApiResponse } from "@/types/ApiResponse";
 
 const useCreateRole = () => {
   return useMutation({
@@ -13,21 +14,7 @@ const useCreateRole = () => {
       authJwtToken: string | undefined;
       roleName: string;
     }) => {
-      if (!roleName || roleName.trim() === "") {
-        throw new Error("Role name cannot be empty");
-      }
-
-      const response = await userServiceApi.post(
-        "/role",
-        { name: roleName },
-        {
-          headers: {
-            Authorization: `${authJwtToken}`,
-          },
-        }
-      );
-
-      return response.data;
+      return await createRole( authJwtToken,roleName);
     },
 
     onError: (error: AxiosError<ErrorResponse>) => {
@@ -44,5 +31,30 @@ const useCreateRole = () => {
     },
   });
 };
+
+type Role = {
+  id: number;
+  name: string;
+  createdAt: string; 
+  updatedAt: string; 
+  deletedAt: string | null;
+};
+
+const createRole=async( authJwtToken: string | undefined, roleName: string):Promise<ApiResponse<Role>>=>{
+   if (!roleName || roleName.trim() === "") {
+        throw new Error("Role name cannot be empty");
+      }
+
+      const response = await userServiceApi.post(
+        "/role",
+        { name: roleName },
+        {
+          headers: {
+            Authorization: `${authJwtToken}`,
+          },
+        }
+      );
+      return response.data;
+}
 
 export default useCreateRole;
