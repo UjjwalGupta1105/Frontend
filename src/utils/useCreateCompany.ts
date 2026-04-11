@@ -1,8 +1,9 @@
 import { jobServiceApi } from "@/lib/axios.config";
 import { CreateCompanySchema } from "@/schema/createCompany.validator";
+import { ApiResponse } from "@/types/ApiResponse";
 import { ErrorResponse } from "@/types/ErrorResponse";
 import { useMutation } from "@tanstack/react-query";
-import axios, { AxiosError } from "axios";
+import  { AxiosError } from "axios";
 import { toast } from "sonner";
 import z from "zod";
 
@@ -19,37 +20,7 @@ function useCreateCompany() {
       createData: CreateCompanyFormType;
       file: File | null;
     }) => {
-      try {
-        if (!file) return toast.error("Company logo is required");
-        const formData = new FormData();
-        formData.append("file", file);
-        const fileUploadUrl = await jobServiceApi.post(
-          "/companies/upload-logo",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              Authorization: `${authJwtToken}`,
-            },
-          },
-        );
-        const logoUrl = fileUploadUrl.data.data.fileUrl;
-
-        if(!logoUrl) return toast.error("Failed to upload logo. Please try again.");
-
-        const response = await jobServiceApi.post(
-          "/companies",
-          { ...createData, logo: logoUrl},
-          {
-            headers: {
-              Authorization: authJwtToken,
-            },
-          },
-        );
-        return response.data;
-      } catch (error) {
-        throw error;
-      }
+      return await createCompany(authJwtToken,createData,file);
     },
     onError: (error: AxiosError<ErrorResponse>) => {
       const message =
@@ -64,6 +35,48 @@ function useCreateCompany() {
       toast.success(data.message || "Company created successfully");
     },
   });
+}
+
+interface Company{
+  company_size_id: number;
+  description: string;
+  id: number;
+  industry_id: number;
+  logo: string;      
+  name: string;
+  website: string; 
+};
+
+const createCompany=async(authJwtToken: string, createData: CreateCompanyFormType, file: File | null):Promise<ApiResponse<Company>>=>{
+   try {
+        if (!file)throw new Error("Company logo is required");
+        const formData = new FormData();
+        formData.append("file", file);
+        const fileUploadUrl = await jobServiceApi.post(
+          "/companies/upload-logo",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `${authJwtToken}`,
+            },
+          },
+        );
+        const logoUrl = fileUploadUrl.data.data.fileUrl;
+
+        const response = await jobServiceApi.post(
+          "/companies",
+          { ...createData, logo: logoUrl},
+          {
+            headers: {
+              Authorization: authJwtToken,
+            },
+          },
+        );
+        return response.data;
+      } catch (error) {
+        throw error;
+      }
 }
 
 export default useCreateCompany;
